@@ -31,6 +31,8 @@ helm install my-release bitnami/postgresql \
         --set persistence.existingClaim=postgresql-pv-claim \
         --set volumePermissions.enabled=true
 
+echo "PostgreSQL credentials: postgres:$(kubectl get secret --namespace pgsql-pgadmin my-release-postgresql -o jsonpath="{.data.postgres-password}" | base64 --decode)"
+
 echo "Deploying pgAdmin using predefined configs..."
 kubectl apply -f ./configs/pgadmin/pgadmin-pvc.yaml
 kubectl apply -f ./configs/pgadmin/pgadmin-configmap.yaml
