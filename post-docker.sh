@@ -1,8 +1,8 @@
 #!/bin/bash
 NC='\033[0m'
 RED='\033[1;31m'
-PGSQL_RELEASE_NAME=postgresql-release
 PGSQL_PGADMIN_NAMESPACE=pgsql-pgadmin
+PGSQL_RELEASE_NAME=postgresql-release
 
 echo -e "${RED}Installing kubectl...${NC}"
 sudo snap install kubectl --classic
@@ -34,7 +34,7 @@ helm install $PGSQL_RELEASE_NAME bitnami/postgresql \
         --set persistence.existingClaim=postgresql-pv-claim \
         --set volumePermissions.enabled=true
 
-echo -e "${RED}PostgreSQL credentials: postgres:$(kubectl get secret --namespace pgsql-pgadmin my-release-postgresql -o jsonpath="{.data.postgres-password}" | base64 --decode)${NC}"
+echo -e "${RED}PostgreSQL credentials: postgres:$(kubectl get secret --namespace ${PGSQL_PGADMIN_NAMESPACE} ${PGSQL_RELEASE_NAME} -o jsonpath="{.data.postgres-password}" | base64 --decode)${NC}"
 
 echo -e "${RED}Deploying pgAdmin using predefined configs...${NC}"
 kubectl apply -f ./configs/pgadmin/pgadmin-pvc.yaml
