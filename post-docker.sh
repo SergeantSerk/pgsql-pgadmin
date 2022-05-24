@@ -8,7 +8,7 @@ sudo snap install helm --classic
 
 echo "Installing minikube..."
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-sudo apt install ./minikube_latest_amd64.deb
+sudo apt install --yes ./minikube_latest_amd64.deb
 
 echo "Starting minikube..."
 echo "Remember, you may need to start minikube every reboot with minikube start"
